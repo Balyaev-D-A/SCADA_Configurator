@@ -28,7 +28,7 @@ private:
     QColorDialog *m_pColorDlg;
 
 private slots:
-    void showColorDialog();
+    void on_toolButton_clicked();
 };
 
 #endif // EVENTEDITFORM_H

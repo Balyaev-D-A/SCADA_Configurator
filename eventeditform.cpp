@@ -8,14 +8,6 @@ EventEditForm::EventEditForm(Database *db, QWidget *parent) :
 {
     ui->setupUi(this);
     m_pdb = db;
-    QPushButton *colorBtn = new QPushButton(ui->colorEdit);
-    colorBtn->setIcon(QIcon(QPixmap(":/icons/colorchoose.png")));
-    colorBtn->setStyleSheet("border: none; padding: 0px;");
-    colorBtn->setCursor(Qt::ArrowCursor);
-    QWidgetAction *action = new QWidgetAction(ui->colorEdit);
-    action->setDefaultWidget(colorBtn);
-    ui->colorEdit->addAction(action, QLineEdit::TrailingPosition);
-    connect(action, &QWidgetAction::triggered, this, &EventEditForm::showColorDialog);
     m_pColorDlg = new QColorDialog(this);
     QString query = "SELECT DISTINCT p_color FROM alarms_tbl";
     m_pdb->execQuery(query);
@@ -91,8 +83,10 @@ void EventEditForm::closeEvent(QCloseEvent *e)
     emit closed();
 }
 
-void EventEditForm::showColorDialog()
+
+
+void EventEditForm::on_toolButton_clicked()
 {
     m_pColorDlg->show();
-    return;
 }
+
