@@ -59,6 +59,7 @@ void NetworkEditForm::on_cancelButton_clicked()
 
 bool NetworkEditForm::editRecord(QString key)
 {
+    setWindowTitle("Редактировать запись");
     QString query = "SELECT s_name, s_ip, s_ip_reserve, i_port, s_driver FROM networksettings_tbl WHERE s_name = '%1'";
     query = query.arg(key);
     if (!m_pdb->execQuery(query)) {
@@ -80,6 +81,7 @@ bool NetworkEditForm::editRecord(QString key)
 
 bool NetworkEditForm::copyRecord(QString key)
 {
+    setWindowTitle("Копировать запись");
     QString query = "SELECT s_name, s_ip, s_ip_reserve, i_port, s_driver FROM networksettings_tbl WHERE s_name = '%1'";
     query = query.arg(key);
     if (!m_pdb->execQuery(query)) {

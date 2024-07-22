@@ -24,6 +24,7 @@ void DeviceEditForm::closeEvent(QCloseEvent *e)
 
 bool DeviceEditForm::editRecord(QString key)
 {
+    setWindowTitle("Редактировать запись");
     QString query = "SELECT s_name, s_name_plc1, s_name_plc2, s_name_dev, s_driver, s_addr_driver, s_descr, "
                     "s_unit, s_room, s_type, i_num_form, i_num_comma, d_low_thr, d_hight_thr, d_alarm_thr, "
                     "d_mix, d_max, i_type_sig, i_arch_time_ms FROM tags_tbl WHERE s_name = '%1'";
@@ -61,6 +62,7 @@ bool DeviceEditForm::editRecord(QString key)
 
 bool DeviceEditForm::copyRecord(QString key)
 {
+    setWindowTitle("Копировать запись");
     QString query = "SELECT s_name, s_name_plc1, s_name_plc2, s_name_dev, s_driver, s_addr_driver, s_descr, "
                     "s_unit, s_room, s_type, i_num_form, i_num_comma, d_low_thr, d_hight_thr, d_alarm_thr, "
                     "d_mix, d_max, i_type_sig, i_arch_time_ms FROM tags_tbl WHERE s_name = '%1'";

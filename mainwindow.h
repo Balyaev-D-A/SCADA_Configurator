@@ -42,5 +42,10 @@ private slots:
     void on_devEditButton_clicked();
     void on_devDeleteButton_clicked();
     void on_devCopyButton_clicked();
+    void on_evtRefreshButton_clicked();
+    void on_evtAddButton_clicked();
+    void on_evtEditButton_clicked();
+    void on_evtDeleteButton_clicked();
+    void on_evtCopyButton_clicked();
 };
 #endif // MAINWINDOW_H

@@ -282,7 +282,70 @@ void MainWindow::eventTableCellDblClicked(int row, int column)
         eef->deleteLater();
         return;
     }
-    connect(eef, &EventEditForm::saved, this, &MainWindow::updateNetworkTable);
+    connect(eef, &EventEditForm::saved, this, &MainWindow::updateEventTable);
     connect(eef, &EventEditForm::closed, this, &MainWindow::formClosed);
     eef->show();
 }
+
+void MainWindow::on_evtRefreshButton_clicked()
+{
+    updateEventTable();
+}
+
+
+void MainWindow::on_evtAddButton_clicked()
+{
+    EventEditForm *eef = new EventEditForm(m_pdb, this);
+    connect(eef, &EventEditForm::saved, this, &MainWindow::updateEventTable);
+    connect(eef, &EventEditForm::closed, this, &MainWindow::formClosed);
+    eef->show();
+}
+
+
+void MainWindow::on_evtEditButton_clicked()
+{
+    int curRow = ui->eventTable->currentRow();
+    if (curRow < 0) return;
+    QString key = ui->eventTable->item(curRow, 0)->text();
+    EventEditForm *eef = new EventEditForm(m_pdb, this);
+    if (!eef->editRecord(key)) {
+        eef->deleteLater();
+        return;
+    }
+    connect(eef, &EventEditForm::saved, this, &MainWindow::updateEventTable);
+    connect(eef, &EventEditForm::closed, this, &MainWindow::formClosed);
+    eef->show();
+}
+
+
+void MainWindow::on_evtDeleteButton_clicked()
+{
+    int curRow = ui->eventTable->currentRow();
+    if (curRow < 0) return;
+    if (QMessageBox::question(this, "Внимание!!!", "Вы действительно хотите удалить запись?") == QMessageBox::Yes) {
+        QString query = "DELETE FROM alarms_tbl WHERE i_code = '%1'";
+        query = query.arg(ui->eventTable->item(curRow, 0)->text());
+        if (!m_pdb->execQuery(query)) {
+            m_pdb->showError(this);
+            return;
+        }
+        updateEventTable();
+    }
+}
+
+
+void MainWindow::on_evtCopyButton_clicked()
+{
+    int curRow = ui->eventTable->currentRow();
+    if (curRow < 0) return;
+    QString key = ui->eventTable->item(curRow, 0)->text();
+    EventEditForm *eef = new EventEditForm(m_pdb, this);
+    if (!eef->copyRecord(key)) {
+        eef->deleteLater();
+        return;
+    }
+    connect(eef, &EventEditForm::saved, this, &MainWindow::updateEventTable);
+    connect(eef, &EventEditForm::closed, this, &MainWindow::formClosed);
+    eef->show();
+}
+
